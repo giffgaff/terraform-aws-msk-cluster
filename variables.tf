@@ -106,3 +106,8 @@ variable "firehose_logs_delivery_stream" {
   type        = string
   default     = ""
 }
+
+variable "plain_text" {
+  type        = bool
+  default     = false
+}

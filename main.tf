@@ -21,6 +21,7 @@ resource "aws_security_group" "this" {
 }
 
 resource "aws_security_group_rule" "msk-plain" {
+  count = var.plain_text ? 1 : 0
   from_port         = 9092
   to_port           = 9092
   protocol          = "tcp"
@@ -39,6 +40,7 @@ resource "aws_security_group_rule" "msk-tls" {
 }
 
 resource "aws_security_group_rule" "zookeeper-plain" {
+  count = var.plain_text ? 1 : 0
   from_port         = 2181
   to_port           = 2181
   protocol          = "tcp"
