@@ -113,6 +113,6 @@ variable "plain_text" {
 }
 
 variable "scram_enabled" {
-  type = string
-  default = "false"
+  type = bool
+  default = false
 }
