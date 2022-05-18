@@ -140,12 +140,12 @@ resource "aws_msk_cluster" "this" {
   }
 
   dynamic "client_authentication" {
-    for_each = var.scram_enabled
+    for_each = var.scram_enabled != "" ? ["true"] : []
     content {
       dynamic "sasl" {
-        for_each = var.scram_enabled
+        for_each = var.scram_enabled != "" ? ["true"] : []
         content {
-          scram = var.scram_enabled
+          scram = var.scram_enabled != "" ? ["true"] : []
         }
       }
     }
