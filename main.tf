@@ -139,6 +139,18 @@ resource "aws_msk_cluster" "this" {
     }
   }
 
+  dynamic "client_authentication" {
+    for_each = var.scram_enabled
+    content {
+      dynamic "sasl" {
+        for_each = var.scram_enabled
+        content {
+          scram = var.scram_enabled
+        }
+      }
+    }
+  }
+
   dynamic "logging_info" {
     for_each = local.enable_logs
     content {
