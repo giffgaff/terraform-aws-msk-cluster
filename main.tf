@@ -177,3 +177,42 @@ resource "aws_msk_cluster" "this" {
 
   tags = var.tags
 }
+
+resource "aws_msk_scram_secret_association" "default" {
+  count = var.scram_enabled ? 1 : 0
+
+  cluster_arn     = aws_msk_cluster.this[0].arn
+  secret_arn_list = var.client_sasl_scram_secret_association_arns
+}
+
+resource "aws_secretsmanager_secret" "secret" {
+  name       = "AmazonMSK_example"
+  kms_key_id = aws_kms_key.msk_kms.key_id
+}
+
+resource "aws_kms_key" "msk_kms" {
+  description = "Example Key for MSK Cluster Scram Secret Association"
+}
+
+resource "aws_secretsmanager_secret_version" "example" {
+  secret_id     = aws_secretsmanager_secret.secret.id
+  secret_string = jsonencode({ username = "sandbox", password = "sandbox" })
+}
+
+resource "aws_secretsmanager_secret_policy" "example" {
+  secret_arn = aws_secretsmanager_secret.example.arn
+  policy     = <<POLICY
+{
+  "Version" : "2012-10-17",
+  "Statement" : [ {
+    "Sid": "AWSKafkaResourcePolicy",
+    "Effect" : "Allow",
+    "Principal" : {
+      "Service" : "kafka.amazonaws.com"
+    },
+    "Action" : "secretsmanager:getSecretValue",
+    "Resource" : "${aws_secretsmanager_secret.secret.arn}"
+  } ]
+}
+POLICY
+}
