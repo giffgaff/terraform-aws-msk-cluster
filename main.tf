@@ -143,6 +143,7 @@ resource "aws_msk_cluster" "this" {
     sasl {
       scram = var.scram_enabled
     }
+ }
 
   dynamic "logging_info" {
     for_each = local.enable_logs
