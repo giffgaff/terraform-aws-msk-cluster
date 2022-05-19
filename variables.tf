@@ -116,3 +116,8 @@ variable "scram_enabled" {
   type = bool
   default = false
 }
+
+variable "iam_enabled" {
+  type = bool
+  default = false
+}

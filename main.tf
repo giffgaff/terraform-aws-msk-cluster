@@ -142,6 +142,7 @@ resource "aws_msk_cluster" "this" {
  client_authentication {
     sasl {
       scram = var.scram_enabled
+      iam   = var.iam_enabled
     }
  }
 
