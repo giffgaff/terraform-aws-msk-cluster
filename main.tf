@@ -199,7 +199,7 @@ resource "aws_kms_key" "msk_kms" {
 
 resource "aws_secretsmanager_secret_version" "example" {
   count = var.scram_enabled ? 1 : 0
-  secret_id     = aws_secretsmanager_secret.secret.id
+  secret_id     = aws_secretsmanager_secret.0.secret.id
   secret_string = jsonencode({ username = "sandbox", password = "sandbox" })
 }
 
