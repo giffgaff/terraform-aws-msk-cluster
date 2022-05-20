@@ -216,7 +216,7 @@ resource "aws_secretsmanager_secret_policy" "secret-policy" {
       "Service" : "kafka.amazonaws.com"
     },
     "Action" : "secretsmanager:getSecretValue",
-    "Resource" : "${aws_secretsmanager_secret.secret.arn}"
+    "Resource" : "${aws_secretsmanager_secret.secret.0.arn}"
   } ]
 }
 POLICY
