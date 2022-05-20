@@ -205,7 +205,7 @@ resource "aws_secretsmanager_secret_version" "example" {
 
 resource "aws_secretsmanager_secret_policy" "secret-policy" {
   count = var.scram_enabled ? 1 : 0
-  secret_arn = aws_secretsmanager_secret.secret.arn
+  secret_arn = aws_secretsmanager_secret.secret.0.arn
   policy     = <<POLICY
 {
   "Version" : "2012-10-17",
