@@ -189,7 +189,7 @@ resource "aws_msk_scram_secret_association" "default" {
 resource "aws_secretsmanager_secret" "secret" {
   count = var.scram_enabled ? 1 : 0
   name       = "AmazonMSK_example"
-  kms_key_id = aws_kms_key.msk_kms.key_id
+  kms_key_id = aws_kms_key.msk_kms.0.key_id
 }
 
 resource "aws_kms_key" "msk_kms" {
