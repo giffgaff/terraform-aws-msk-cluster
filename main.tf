@@ -187,20 +187,24 @@ resource "aws_msk_scram_secret_association" "default" {
 }
 
 resource "aws_secretsmanager_secret" "secret" {
+  count = var.scram_enabled ? 1 : 0
   name       = "AmazonMSK_example"
   kms_key_id = aws_kms_key.msk_kms.key_id
 }
 
 resource "aws_kms_key" "msk_kms" {
+  count = var.scram_enabled ? 1 : 0
   description = "Example Key for MSK Cluster Scram Secret Association"
 }
 
 resource "aws_secretsmanager_secret_version" "example" {
+  count = var.scram_enabled ? 1 : 0
   secret_id     = aws_secretsmanager_secret.secret.id
   secret_string = jsonencode({ username = "sandbox", password = "sandbox" })
 }
 
 resource "aws_secretsmanager_secret_policy" "secret-policy" {
+  count = var.scram_enabled ? 1 : 0
   secret_arn = aws_secretsmanager_secret.secret.arn
   policy     = <<POLICY
 {
